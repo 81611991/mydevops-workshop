@@ -7,7 +7,7 @@ resource "aws_instance" "demo-server" {
     ami = "ami-1234567"
     instance_type = "t2.micro"
     key_name = "dpp"
-    security_groups = [ "demo-sg" ]
+    vpc_security_group_ids = [ aws_security_group.demo-sg.id ]
     subnet_id = aws_subnet.dpp-public-subnet-01.id 
   
 }
@@ -71,7 +71,7 @@ resource "aws_internet_gateway" "dpp-igw" {
 
 resource "aws_route_table" "dpp-public-rt" {
     vpc_id = aws_vpc.dpp-vpc.id
-    route = {
+    route  {
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.dpp-igw.id
     }
